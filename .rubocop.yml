@@ -1,5 +1,12 @@
+plugins:
+  - rubocop-rspec
+
 AllCops:
   TargetRubyVersion: 3.0
+  NewCops: enable
+
+Style/Documentation:
+  Enabled: false
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes

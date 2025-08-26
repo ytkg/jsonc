@@ -1,23 +1,24 @@
-name: Ruby
+name: ci
 
-on:
-  push:
-    branches:
-      - main
-
-  pull_request:
+on: push
 
 jobs:
+  ruby-versions:
+    uses: ruby/actions/.github/workflows/ruby_versions.yml@master
+    with:
+      engine: cruby
+      min_version: 3.0
+
   build:
+    needs: ruby-versions
     runs-on: ubuntu-latest
     name: Ruby ${{ matrix.ruby }}
     strategy:
       matrix:
-        ruby:
-          - '3.3.5'
+        ruby: ${{ fromJson(needs.ruby-versions.outputs.versions) }}
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
