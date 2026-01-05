@@ -65,11 +65,13 @@ JSONC.parse(jsonc_string)
 # Custom size limit (50MB)
 JSONC.parse(large_jsonc_string, max_bytes: 52_428_800)
 
-# Also works with load_file
+# Also works with load_file (checks file size before reading)
 JSONC.load_file('config.jsonc', max_bytes: 1_048_576)  # 1MB
 ```
 
 Exceeding the size limit raises a `JSON::ParserError`.
+
+**Note**: The size limit applies to the raw JSONC input (including comments and whitespace) before sanitization. This means files with extensive comments count toward the limit.
 
 ### Loading a File
 

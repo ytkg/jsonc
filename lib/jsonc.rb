@@ -21,6 +21,14 @@ module JSONC
   end
 
   def self.load_file(path, **opts)
+    max_bytes = opts.fetch(:max_bytes, DEFAULT_MAX_BYTES)
+    file_size = File.size(path)
+
+    if file_size > max_bytes
+      raise JSON::ParserError,
+            "file too large (#{file_size} bytes, max #{max_bytes} bytes)"
+    end
+
     parse(File.read(path), **opts)
   end
 end

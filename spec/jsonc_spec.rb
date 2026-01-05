@@ -75,7 +75,7 @@ RSpec.describe JSONC do
     it "rejects files exceeding max_bytes limit" do
       Tempfile.create(["test", ".jsonc"]) do |file|
         file.write("{\"data\": \"#{"a" * 10_485_760}\"}")
-        expect { described_class.load_file(file.path) }.to raise_error(JSON::ParserError, /input string too large/)
+        expect { described_class.load_file(file.path) }.to raise_error(JSON::ParserError, /too large/)
       end
     end
 
