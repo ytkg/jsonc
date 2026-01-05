@@ -46,5 +46,23 @@ RSpec.describe JSONC::Parser::TrailingCommaRemover do
         expect(parser.parse).to eq(input)
       end
     end
+
+    context "when input ends with backslash in a string" do
+      let(:input) { '{"text": "test\\' }
+
+      it "handles out-of-bounds access gracefully" do
+        result = parser.parse
+        expect(result).to eq('{"text": "test\\')
+      end
+    end
+
+    context "with normal escape sequences" do
+      let(:input) { '{"text": "test\n\t\"\\path"}' }
+
+      it "preserves them correctly" do
+        result = parser.parse
+        expect(result).to eq('{"text": "test\n\t\"\\path"}')
+      end
+    end
   end
 end
