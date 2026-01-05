@@ -54,6 +54,23 @@ puts parsed_hash["name"]
 # => Jules
 ```
 
+#### Size Limit
+
+To prevent memory exhaustion from malicious or excessively large inputs, you can set a `max_bytes` limit (default: 10MB):
+
+```ruby
+# Default 10MB limit
+JSONC.parse(jsonc_string)
+
+# Custom size limit (50MB)
+JSONC.parse(large_jsonc_string, max_bytes: 52_428_800)
+
+# Also works with load_file
+JSONC.load_file('config.jsonc', max_bytes: 1_048_576)  # 1MB
+```
+
+Exceeding the size limit raises a `JSON::ParserError`.
+
 ### Loading a File
 
 Use `JSONC.load_file` in place of `JSON.load_file`.
