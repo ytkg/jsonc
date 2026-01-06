@@ -50,8 +50,13 @@ module JSONC
       def parse_string
         char = @string[@index]
         if char == "\\"
-          @result << char << @string[@index + 1]
-          @index += 2
+          @result << char
+          if @index + 1 < @string.length
+            @result << @string[@index + 1]
+            @index += 2
+          else
+            @index += 1
+          end
         elsif char == '"'
           @state = :normal
           @result << char
