@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed out-of-bounds string access vulnerability in parser that caused crashes when processing malformed input with trailing backslash
 
+### Changed
+
+- Run CI on pull requests
+
 ## [0.1.0] - 2025-08-24
 
 ### Added
