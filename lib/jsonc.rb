@@ -21,7 +21,7 @@ module JSONC
   end
 
   def self.load_file(path, **opts)
-    max_bytes = opts.fetch(:max_bytes, DEFAULT_MAX_BYTES)
+    max_bytes = opts.delete(:max_bytes) || DEFAULT_MAX_BYTES
     file_size = File.size(path)
 
     if file_size > max_bytes

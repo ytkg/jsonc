@@ -60,6 +60,11 @@ RSpec.describe JSONC do
         large_string = "{\"data\": \"#{"a" * 15_000_000}\"}"
         expect { described_class.parse(large_string, max_bytes: 20_000_000) }.not_to raise_error
       end
+
+      it "uses default max_bytes when max_bytes: nil is passed" do
+        small_string = '{"data": "test"}'
+        expect { described_class.parse(small_string, max_bytes: nil) }.not_to raise_error
+      end
     end
   end
 
@@ -83,6 +88,22 @@ RSpec.describe JSONC do
       Tempfile.create(["test", ".jsonc"]) do |file|
         file.write("{\"data\": \"#{"a" * 1_000_000}\"}")
         expect { described_class.load_file(file.path) }.not_to raise_error
+      end
+    end
+
+    it "does not raise error when max_bytes: nil is passed" do
+      Tempfile.create(["test", ".jsonc"]) do |file|
+        file.write(jsonc_string)
+        file.rewind
+        expect { described_class.load_file(file.path, max_bytes: nil) }.not_to raise_error
+      end
+    end
+
+    it "correctly parses when max_bytes: nil is passed" do
+      Tempfile.create(["test", ".jsonc"]) do |file|
+        file.write(jsonc_string)
+        file.rewind
+        expect(described_class.load_file(file.path, max_bytes: nil)).to eq(expected_hash)
       end
     end
   end
