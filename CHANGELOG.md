@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed an issue where `JSONC.load_file` did not correctly propagate custom `max_bytes` values to `JSONC.parse`
+
 ## [0.2.0] - 2026-01-09
 
 ### Security
